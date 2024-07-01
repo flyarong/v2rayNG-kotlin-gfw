@@ -1,6 +1,6 @@
 package com.v2ray.ang.ui
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -44,7 +44,7 @@ class TaskerActivity : BaseActivity() {
         val adapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_single_choice, lstData)
         listview = findViewById<View>(R.id.listview) as ListView
-        listview!!.adapter = adapter
+        listview?.adapter = adapter
 
         init()
     }
@@ -90,7 +90,7 @@ class TaskerActivity : BaseActivity() {
 
         intent.putExtra(AppConfig.TASKER_EXTRA_BUNDLE, extraBundle)
         intent.putExtra(AppConfig.TASKER_EXTRA_STRING_BLURB, blurb)
-        setResult(Activity.RESULT_OK, intent)
+        setResult(AppCompatActivity.RESULT_OK, intent)
         finish()
     }
 

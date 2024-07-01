@@ -1,7 +1,7 @@
 package com.v2ray.ang.ui
 
 import android.Manifest
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -31,16 +31,6 @@ class ScannerActivity : BaseActivity(){
         if (settingsStorage?.decodeBool(AppConfig.PREF_START_SCAN_IMMEDIATE) == true) {
             launchScan()
         }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    public override fun onResume() {
-        super.onResume()
-    }
-
-    public override fun onPause() {
-        super.onPause()
     }
 
     private fun launchScan(){
@@ -55,7 +45,7 @@ class ScannerActivity : BaseActivity(){
 
     private fun handleResult(result: QRResult) {
         if (result is QRResult.QRSuccess ) {
-            finished(result.content.rawValue)
+            finished(result.content.rawValue?:"")
         } else {
             finish()
         }
@@ -64,7 +54,7 @@ class ScannerActivity : BaseActivity(){
     private fun finished(text: String) {
         val intent = Intent()
         intent.putExtra("SCAN_RESULT", text)
-        setResult(Activity.RESULT_OK, intent)
+        setResult(AppCompatActivity.RESULT_OK, intent)
         finish()
     }
 
@@ -120,7 +110,7 @@ class ScannerActivity : BaseActivity(){
             try {
                 val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
                 val text = QRCodeDecoder.syncDecodeQRCode(bitmap)
-                finished(text!!)
+                finished(text?:"")
             } catch (e: Exception) {
                 e.printStackTrace()
                 toast(e.message.toString())
